@@ -27,10 +27,31 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-
+    createMeetup (state, payload) {
+      state.loadedMeetups.push(payload)
+    }
   },
   actions: {
-
+    // If the data model is different than what is received then
+    // this is how we remap the data to fit the model that we need.
+    // Maybe there are some properties that we don't need,
+    // We can get rid of it here. If we don't need to remap the data
+    // then just the mutation function will do.
+    createMeetup ({ commit }, payload) {
+      const meetup = {
+        title: payload.title,
+        location: payload.location,
+        imageUrl: payload.imageUrl,
+        description: payload.description,
+        date: payload.date,
+        id: 'akchbsdknvskdv'
+      }
+      // At this point: Reach out to firebase and store it.
+      // Firebase will also give us an ID which  we will learn how to store
+      // This is also where we will upload the image and get the image path.
+      // For now, we will  simply commit the logic as is.
+      commit('createMeetup', meetup)
+    }
   },
   getters: {
     loadedMeetups (state) {
