@@ -24,7 +24,7 @@
         <!-- Footer ------------------------------------>
         <v-layout row wrap class="mt-4">
             <v-flex xs12 class="text-xs-center">
-                <p>Join our awesome meetups!</p>
+                <p>Join our awesome meetups!</p> 
             </v-flex>
         </v-layout>
     </v-container>

@@ -48,14 +48,27 @@
                     </v-layout>
                    <v-layout row>
                         <v-flex xs12 sm6 offset-sm3>
-                            <v-text-field 
+                            <v-textarea
                                 name="description" 
                                 label="Description" 
                                 id="description"
-                                v-model="description"
-                                multi-line 
+                                v-model="description" 
                                 required>
-                            </v-text-field>
+                            </v-textarea>
+                        </v-flex>
+                    </v-layout>
+                    <v-layout row class="mb-2">
+                        <v-flex xs12 sm6 offset-sm3>
+                            <h2>Choose a Date and Time</h2>
+                            <v-date-picker v-model="date"></v-date-picker>
+                            <p>{{ date }}</p>
+                        </v-flex>
+                    </v-layout>
+                    <v-layout row>
+                        <v-flex xs12 sm6 offset-sm3>
+                            <h2>Choose a Date and Time</h2>
+                            <v-time-picker v-model="time" format="24hr"></v-time-picker>
+                            <p>{{ time }}</p>
                         </v-flex>
                     </v-layout>
                     <v-layout row>
@@ -63,6 +76,7 @@
                             <v-btn class="primary" 
                                   :disabled="!formIsValid"
                                    type="submit">Create Meetup</v-btn>
+                            {{ submitDateTime }}
                         </v-flex>
                     </v-layout>
                 </form>
@@ -79,7 +93,9 @@ export default {
             title: '',
             location: '',
             imageUrl: '',
-            description: ''
+            description: '',
+            date: null,
+            time: new Date()
         }
     },
     computed: {
@@ -89,6 +105,24 @@ export default {
                 this.location !== '' && 
                 this.imageUrl !== '' && 
                 this.description !== ''
+        },
+        submitDateTime () {
+            const date = new Date(this.date)
+            if (typeof this.time === 'string') {
+                // handles the time string from the picker which will  
+                // retrieve the time and convert it into  the appropriate format
+                const hours = this.time.match(/^(\d+)/)[1]  
+                const minutes = this.time.match(/:(\d+)/)[1]
+                // set the hour and minutes with the converted time 
+                date.setHours(hours)
+                date.setMinutes(minutes)
+            } else {
+                date.setHours(this.time.getHours())         // the time refers to the time property
+                date.setMinutes(this.time.getMinutes())     // this works becasue of the Date method
+                                                            // Once we choose a new time, it breaks
+            }
+            console.log(date)                           
+            return date
         }
     },
     methods: {
@@ -102,7 +136,7 @@ export default {
                 location: this.location,
                 imageUrl: this.imageUrl,
                 description: this.description,
-                date: new Date()
+                date: this.submitDateTime
             }
             // ship the object to the store by running the function 
             // and passing the data through 
