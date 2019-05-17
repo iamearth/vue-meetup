@@ -33,18 +33,9 @@
 <script>
 export default {
     name: 'Home',
-    data() {
-        return {
-            meetups: [
-                { imageUrl: 'https://lonelyplanetimages.imgix.net/mastheads/GettyImages-538096543_medium.jpg?sharp=10&vib=20&w=1200', 
-                  id: 'akjnksdjv', 
-                  title: 'Meetup in New York'
-                },
-                { imageUrl: 'https://photos.mandarinoriental.com/is/image/MandarinOriental/paris-2017-home?wid=2880&hei=1280&fmt=jpeg&crop=9,336,2699,1200&anchor=1358,936&qlt=75,0&fit=wrap&op_sharpen=0&resMode=sharp2&op_usm=0,0,0,0&iccEmbed=0&printRes=72', 
-                  id: 'sdkfbaknnckajc', 
-                  title: 'Meetup in Paris'
-                }
-            ]
+    computed: {
+        meetups () {
+            return this.$store.getters.featuredMeetups
         }
     },
     methods: {
