@@ -86,6 +86,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 export default {
     name: 'CreateMeetup',
     data() {
@@ -97,6 +98,11 @@ export default {
             date: null,
             time: new Date()
         }
+    },
+    created() {
+        const dateTime = moment()
+        this.date = dateTime.format('YYYY-MM-DD').toString()
+        this.time = dateTime.format('HH:mm').toString()
     },
     computed: {
         // only shows bbutton if all fields are filled
